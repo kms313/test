@@ -27,33 +27,30 @@ Work Flow
 * Create **Listener**
 
   1. Update Security Group Rule that user requests such as port
-  #. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-  #. Request configuration of listener to loadbalancer VMs
+  2. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
+  3. Request configuration of listener to loadbalancer VMs
 
 * Create **Pool**
   1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-  #. Request configuration of pool to loadbalancer VMs
+  2. Request configuration of pool to loadbalancer VMs
 
 * Create **Member**
 
   1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-  #. Request configuration of member to loadbalancer VMs
+  2. Request configuration of member to loadbalancer VMs
 
 * Create **Healthmonitor**
   1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-  #. Request configuration of healthmonitor to loadbalancer VMs
+  2. Request configuration of healthmonitor to loadbalancer VMs
 
 Installation
 ------------
 
 1. Clone kinx-loadbalancer github repository
 ``$ git clone https://github.com/kinxnet/kinx-loadbalancer.git``
-
 2. Copy kinx-loadbalancer driver to Openstack neutron_lbaas driver
 ``$ cp -rf kinx-loadbalancer/kinx_loadbalancer_driver /usr/lib/python2.7/dist-packages/neutron_lbaas/drivers/kinx``
-
 3. Create availibility zone for kinx-loadbalancer
-
 4. Add Kinx-loadbalancer configuration to `/etc/neutron/neutron.conf`
 
 ::
