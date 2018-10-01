@@ -25,21 +25,23 @@ Work Flow
   #. Request configuration of crontab that periodically send VMs Health Information
 
 * Create **Listener**
-1. Update Security Group Rule that user requests such as port
-2. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-3. Request configuration of listener to loadbalancer VMs
+
+  1. Update Security Group Rule that user requests such as port
+  #. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
+  #. Request configuration of listener to loadbalancer VMs
 
 * Create **Pool**
-1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-2. Request configuration of pool to loadbalancer VMs
+  1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
+  #. Request configuration of pool to loadbalancer VMs
 
 * Create **Member**
-1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-2. Request configuration of member to loadbalancer VMs
+
+  1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
+  #. Request configuration of member to loadbalancer VMs
 
 * Create **Healthmonitor**
-1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
-2. Request configuration of healthmonitor to loadbalancer VMs
+  1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
+  #. Request configuration of healthmonitor to loadbalancer VMs
 
 Installation
 ------------
@@ -54,7 +56,8 @@ Installation
 
 4. Add Kinx-loadbalancer configuration to `/etc/neutron/neutron.conf`
 
-    ```ini
+::
+
     [DEFAULT]
     dhcp_agents_per_network=3
 
@@ -88,7 +91,6 @@ Installation
     ceilometer_period=60
     ceilometer_evaluation_periods=3
     ceilometer_pps_threshold=20000
-    ```
 
 5. Restart neutron server
 ``$ service neutron-server restart``
