@@ -52,11 +52,9 @@ Installation
 
     $ git clone https://github.com/kinxnet/kinx-loadbalancer.git
 
-
 2. Copy kinx-loadbalancer driver to Openstack neutron_lbaas driver::
 
     $ cp -rf kinx-loadbalancer/kinx_loadbalancer_driver /usr/lib/python2.7/dist-packages/neutron_lbaas/drivers/kinx
-
 
 3. Create availibility zone for kinx-loadbalancer
 
@@ -98,3 +96,4 @@ Installation
 
 5. Restart neutron server::
     $ service neutron-server restart
+
