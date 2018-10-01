@@ -11,8 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 3
 
-   source/intro
-   source/kinx-loadbalancer
+   source/kinx-loadbalancer-driver
+   source/kinx-loadbalancer-agent
+   source/kinx-loadbalancer-api
 
 
 
