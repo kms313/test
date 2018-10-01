@@ -94,6 +94,7 @@ Installation
     ceilometer_evaluation_periods=3
     ceilometer_pps_threshold=20000
 
+
 5. Restart neutron server::
     $ service neutron-server restart
 
