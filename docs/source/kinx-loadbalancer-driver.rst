@@ -54,6 +54,7 @@ Pre-Installation
 ----------------
 
 #. vLB MGMT Network creation(vLB VM <--> vLB Controller)::
+
     # Interface Configuration (VLAN 680)
     $ vim ifcfg-bond0.680
     auto bond0.680
@@ -138,6 +139,7 @@ Pre-Installation
     $ iptables -A INPUT -s 10.30.252.0/22 -p tcp --dport {vlbapi port} -j ACCEPT
 
 #. vLB L3 Network Creation::
+
     $ neutron net-create --shared --provider:physical_network physnet2 --provider:network_type vlan --provider:segmentation_id 660 lb-l3-net
     Created a new network:
     +---------------------------+--------------------------------------+
