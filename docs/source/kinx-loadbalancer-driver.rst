@@ -48,17 +48,17 @@ Work Flow
 Installation
 ------------
 
-1. Clone kinx-loadbalancer github repository::
+#. Clone kinx-loadbalancer github repository::
 
     $ git clone https://github.com/kinxnet/kinx-loadbalancer.git
 
-2. Copy kinx-loadbalancer driver to Openstack neutron_lbaas driver::
+#. Copy kinx-loadbalancer driver to Openstack neutron_lbaas driver::
 
     $ cp -rf kinx-loadbalancer/kinx_loadbalancer_driver /usr/lib/python2.7/dist-packages/neutron_lbaas/drivers/kinx
 
-3. Create availibility zone for kinx-loadbalancer
+#. Create availibility zone for kinx-loadbalancer
 
-4. Add Kinx-loadbalancer configuration to `/etc/neutron/neutron.conf`::
+#. Add Kinx-loadbalancer configuration to ``/etc/neutron/neutron.conf``::
 
     [DEFAULT]
     dhcp_agents_per_network=3
@@ -94,6 +94,6 @@ Installation
     ceilometer_evaluation_periods=3
     ceilometer_pps_threshold=20000
 
-5. Restart neutron server::
+#. Restart neutron server::
 
     $ service neutron-server restart
