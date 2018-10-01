@@ -11,18 +11,18 @@ Work Flow
 
 * Create **Loadbalancer**
 
-    #. Create Security Group & Rule
-    #. Create Server Group for seperation of VM server to different host
-    #. Create Two Loadbalancer VM (Active-Active)
-    #. Request storing virtual-loadbalancer information to vlb-api server (VLB ID, etc...)
-    #. Wait until VM is active status
-    #. Create Ceilometer Alarm (PPS Threshold)
-    #. Request storing created VMs infortaming to vlb-api server (VM ID, Alarm ID, etc...)
-    #. Update Port Address Pair with VIP
-    #. Request configuration of loadbalancer to created VMs (haproxy.cfg)
-    #. Request configuration of peer between created VMs (haproxy.cfg)
-    #. Request configuration of quagga for ECMP loadbalancing
-    #. Request configuration of crontab that periodically send VMs Health Information
+  1. Create Security Group & Rule
+  #. Create Server Group for seperation of VM server to different host
+  #. Create Two Loadbalancer VM (Active-Active)
+  #. Request storing virtual-loadbalancer information to vlb-api server (VLB ID, etc...)
+  #. Wait until VM is active status
+  #. Create Ceilometer Alarm (PPS Threshold)
+  #. Request storing created VMs infortaming to vlb-api server (VM ID, Alarm ID, etc...)
+  #. Update Port Address Pair with VIP
+  #. Request configuration of loadbalancer to created VMs (haproxy.cfg)
+  #. Request configuration of peer between created VMs (haproxy.cfg)
+  #. Request configuration of quagga for ECMP loadbalancing
+  #. Request configuration of crontab that periodically send VMs Health Information
 
 * Create **Listener**
 1. Update Security Group Rule that user requests such as port
