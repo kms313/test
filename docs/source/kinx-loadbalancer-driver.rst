@@ -24,22 +24,22 @@ Work Flow
   #. Request configuration of quagga for ECMP loadbalancing
   #. Request configuration of crontab that periodically send VMs Health Information
 
-* Create **Listener**
+* Create Listener
 
   1. Update Security Group Rule that user requests such as port
   2. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
   3. Request configuration of listener to loadbalancer VMs
 
-* Create **Pool**
+* Create Pool
   1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
   2. Request configuration of pool to loadbalancer VMs
 
-* Create **Member**
+* Create Member
 
   1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
   2. Request configuration of member to loadbalancer VMs
 
-* Create **Healthmonitor**
+* Create Healthmonitor
   1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
   2. Request configuration of healthmonitor to loadbalancer VMs
 
@@ -48,9 +48,12 @@ Installation
 
 1. Clone kinx-loadbalancer github repository
 ``$ git clone https://github.com/kinxnet/kinx-loadbalancer.git``
+
 2. Copy kinx-loadbalancer driver to Openstack neutron_lbaas driver
 ``$ cp -rf kinx-loadbalancer/kinx_loadbalancer_driver /usr/lib/python2.7/dist-packages/neutron_lbaas/drivers/kinx``
+
 3. Create availibility zone for kinx-loadbalancer
+
 4. Add Kinx-loadbalancer configuration to `/etc/neutron/neutron.conf`
 
 ::
