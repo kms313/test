@@ -10,28 +10,32 @@ Work Flow
 ---------
 
 * Create **Loadbalancer**
-1. Create Security Group & Rule
-2. Create Server Group for seperation of VM server to different host
-3. Create Two Loadbalancer VM (Active-Active)
-4. Request storing virtual-loadbalancer information to vlb-api server (VLB ID, etc...)
-5. Wait until VM is active status
-6. Create Ceilometer Alarm (PPS Threshold)
-7. Request storing created VMs infortaming to vlb-api server (VM ID, Alarm ID, etc...)
-8. Update Port Address Pair with VIP
-9. Request configuration of loadbalancer to created VMs (haproxy.cfg)
-10. Request configuration of peer between created VMs (haproxy.cfg)
-11. Request configuration of quagga for ECMP loadbalancing
-12. Request configuration of crontab that periodically send VMs Health Information
+  1. Create Security Group & Rule
+  2. Create Server Group for seperation of VM server to different host
+  3. Create Two Loadbalancer VM (Active-Active)
+  4. Request storing virtual-loadbalancer information to vlb-api server (VLB ID, etc...)
+  5. Wait until VM is active status
+  6. Create Ceilometer Alarm (PPS Threshold)
+  7. Request storing created VMs infortaming to vlb-api server (VM ID, Alarm ID, etc...)
+  8. Update Port Address Pair with VIP
+  9. Request configuration of loadbalancer to created VMs (haproxy.cfg)
+  10. Request configuration of peer between created VMs (haproxy.cfg)
+  11. Request configuration of quagga for ECMP loadbalancing
+  12. Request configuration of crontab that periodically send VMs Health Information
+
 * Create **Listener**
 1. Update Security Group Rule that user requests such as port
 2. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
 3. Request configuration of listener to loadbalancer VMs
+
 * Create **Pool**
 1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
 2. Request configuration of pool to loadbalancer VMs
+
 * Create **Member**
 1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
 2. Request configuration of member to loadbalancer VMs
+
 * Create **Healthmonitor**
 1. Recieve loadbalancer VMs information(LB-MGMT IP) from vlb-api databases
 2. Request configuration of healthmonitor to loadbalancer VMs
