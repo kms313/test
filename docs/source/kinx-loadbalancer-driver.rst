@@ -96,4 +96,3 @@ Installation
 
 5. Restart neutron server::
     $ service neutron-server restart
-
