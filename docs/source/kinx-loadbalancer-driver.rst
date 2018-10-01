@@ -1,10 +1,15 @@
 KINX-loadbalancer-driver
-============
+========================
 
 What is KINX loadbalancer driver?
 ---------------------------------
 
 KINX loadbalancer driver is Openstack neutron lbaasv2 driver which create VM-based reverse proxy & loadbalancer.
+
+KINX Loadbalancer Driver Architecture
+-------------------------------------
+
+.. image:: images/klb_driver.png
 
 Work Flow
 ---------
