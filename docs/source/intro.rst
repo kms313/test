@@ -12,6 +12,11 @@ There is also missing bridge between guides for beginners (or **normal** users) 
 
 Second motivation for me was also the fact that I've terrible memory and started to forget all useful things. So this also serves as kind of a notebook for me.
 
+Images
+______
+
+.. |Github| image:: images/github.png
+
 What are these guides about
 ----------------------------
 
