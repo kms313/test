@@ -15,7 +15,7 @@ Second motivation for me was also the fact that I've terrible memory and started
 Images
 ______
 
-.. |Github| image:: images/github.png
+.. image:: images/github.png
 
 What are these guides about
 ----------------------------
