@@ -6,6 +6,8 @@
 Welcome to KINX-loadbalancer's documentation!
 =============================================
 
+Contents:
+
 .. toctree::
    :maxdepth: 3
 
