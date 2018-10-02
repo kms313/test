@@ -19,7 +19,7 @@ Work Flow
 
    * API: ``/api/haproxy/loadbalancers``
    * Request
-   .. code-block:: json
+.. code-block:: json
       {
           "id": "lb_id",
           "name": "lb_name",
