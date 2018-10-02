@@ -165,11 +165,90 @@ REST API Example
         balance roundrobin
         stick-table type ip size 200k expire 1d peers kinx_loadbalancer_peers
         stick on src
-        \*\*timeout check 10\*\*
-        **option httpchk GET /**
-        **http-check expect rstatus 200**
+        timeout check 10
+        option httpchk GET /
+        http-check expect rstatus 200
         option forwardfor
-        server a0c8e3ff-5791-42dd-ac9f-f3bd0450c654 192.168.55.36:80 weight 1 **check inter 3s fall 2 rise 2**
+        server a0c8e3ff-5791-42dd-ac9f-f3bd0450c654 192.168.55.36:80 weight 1 check inter 3s fall 2 rise 2
+
+* Peer POST API: ``/api/haproxy/peers``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "hostname": "hostname",
+          "address": "address"
+      }
+
+   **Example HAProxy config result**:
+   ::
+
+    peers kinx_loadbalancer_peers
+        peer lbv-37f0c3aa-a754-4f2c-9712-e35422002cea 10.40.252.235:1024
+        peer lbv-6f07625e-4731-4532-a429-dc7adf1e79d3 10.40.252.234:1024
+
+* Quaaga POST API: ``/api/quagga``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "hostname": "hostname",
+          "inter_as_number": "inter_as_number",
+          "vm_addr": "l3_addr",
+          "primary_gateway_addr": "primary_l3_gateway_addr",
+          "secondary_gateway_addr": "secondary_l3_gateway_addr",
+          "router_as_number": "l3_router_as_number",
+          "vip_addr": "vip_addr"
+      }
+
+   **Example Quaaga Request result**:
+   ::
+
+    root@lbv-37:/home/ubuntu# ifconfig
+    ....
+    lo:0      Link encap:Local Loopback
+              inet addr:1.201.0.47  Mask:255.255.255.255
+              UP LOOPBACK RUNNING  MTU:65536  Metric:1
+
+    root@lbv-37:/home/ubuntu# vim /etc/quagga/bgpd.conf
+    hostname lbv-37f0c3aa-a754-4f2c-9712-e35422002cea
+    password pass
+    !
+    router bgp 50235
+     bgp router-id 10.40.252.235
+     redistribute static route-map bgp-access
+     neighbor 10.40.252.2 remote-as 60201
+     neighbor 10.40.252.3 remote-as 60201
+     network 1.201.0.47/32
+    !
+    route-map bgp-access permit 10
+     match ip address prefix-list pl-route
+    !
+    ip prefix-list pl-route seq 10 permit 0.0.0.0/0 ge 31
+    !
+    log file /var/log/quagga/bgpd.log
+    !
+    line vty
+
+* Crontab POST API: ``/api/crontab``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "agent_addr": "agent_addr",
+          "agent_port": "agent_port",
+          "tenant_id": "lb.tenant_id",
+          "vm_id": "vm_id"
+      }
+
+   **Example Crontab config result**:
+   ::
+
+    root@lbv-37:/home/ubuntu# crontab -e
+    * * * * * /usr/local/bin/check_vlb
 
 Installation
 ------------
@@ -269,3 +348,17 @@ Installation
     $ glance image-download --file {file-name] --progress {image-id}
     $ qemu-img convert -f raw -O qcow2 {raw-image} {qcow2-image}
     $ glance image-create --disk-format qcow2 --container-format bare --visibility public --progress --name {image-name} --file {qcow2-image}
+
+
+How to debug
+------------
+
+* Can connect with os_dev.pem in kinx-loadbalancer Gibhub Repository(https://github.com/kinxnet/kinx-loadbalancer/blob/master/key/os_dev.pem) via vLB MTMG Network::
+
+    $ ssh -i os_dev.pem ubuntu@10.30.252.255
+
+* Trace log file ``/var/log/kinx-loadbalancer-agent.log`` in vLB VMs
+
+ 
+
+
