@@ -17,10 +17,12 @@ Work Flow
 
 * Create **Loadbalancer**
 
-   * API: ``/api/haproxy/loadbalancers``
-   * Request
+.. http:post:: /api/haproxy/loadbalancers
 
-   .. code-block:: JSON
+   **Example request**:
+
+   .. sourcecode:: js
+
       {
          "id": "lb_id",
          "name": "lb_name",
