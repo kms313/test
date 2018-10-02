@@ -12,23 +12,21 @@ KINX Loadbalancer Agent Architecture
 
 .. image:: images/klb_agent.png
 
-Work Flow
----------
+REST API Example
+----------------
 
-* Create **Loadbalancer**
-
-.. http:post:: /api/haproxy/loadbalancers
+.. http:get:: /api/haproxy/loadbalancers
 
    **Example request**:
 
    .. sourcecode:: js
 
       {
-         "id": "lb_id",
-         "name": "lb_name",
-         "description": "lb_description",
-         "enabled": "lb_admin_state_up",
-         "project_id": "lb.tenant_id"
+          "id": "lb_id",
+          "name": "lb_name",
+          "description": "lb_description",
+          "enabled": "lb_admin_state_up",
+          "project_id": "lb.tenant_id"
       }
 
 Installation
