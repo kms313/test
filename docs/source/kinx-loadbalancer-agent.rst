@@ -353,13 +353,10 @@ Installation
 How to debug
 ------------
 
-* Connect to vLB VMs with os_dev.pem in `kinx-loadbalancer-Github
-<https://github.com/kinxnet/kinx-loadbalancer/blob/master/key/os_dev.pem>`_ via vLB MTMG Network::
+* Connect to vLB VMs with os_dev.pem in `kinx-loadbalancer Github`_ via vLB MTMG Network::
 
     $ ssh -i os_dev.pem ubuntu@10.30.252.255
 
 * Trace log file ``/var/log/kinx-loadbalancer-agent.log`` in vLB VMs
 
- 
-
-
+.. _kinx-loadbalancer Github: https://github.com/kinxnet/kinx-loadbalancer/blob/master/key/os_dev.pem
