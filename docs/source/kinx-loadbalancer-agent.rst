@@ -18,6 +18,15 @@ Work Flow
 * Create **Loadbalancer**
 
    * API: ``/api/haproxy/loadbalancers``
+   * Request
+   .. code-block:: json
+      {
+          "id": "lb_id",
+          "name": "lb_name",
+          "description": "lb_description"
+          "enabled": "lb_admin_state_up",
+          "project_id": "lb.tenant_id"
+      }
 
 Installation
 ------------
