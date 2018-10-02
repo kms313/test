@@ -165,7 +165,7 @@ REST API Example
         balance roundrobin
         stick-table type ip size 200k expire 1d peers kinx_loadbalancer_peers
         stick on src
-        **timeout check 10**
+        \*\*timeout check 10\*\*
         **option httpchk GET /**
         **http-check expect rstatus 200**
         option forwardfor
