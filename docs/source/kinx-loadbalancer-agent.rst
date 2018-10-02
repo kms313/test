@@ -1,71 +1,119 @@
-Introduction
-============
+KINX-loadbalancer-agent
+========================
 
-Who am I?
-----------
+What is KINX loadbalancer agent?
+---------------------------------
 
-I'm student of technical university in Czech republic and one of my hobbies is IT. I'm user of Arch Linux on my laptop and I'm also running small home server hosting several websites of my friends and myself. 
+HAproxy agent is agent which help to make HAProxy configuration and support neighboring with L3 switch to support N+1 Loadbalancer using ECMP.
+HAproxy agent serve REST API request using Flask & Gunicorn.
 
-Everything I've learned I've learned on the internet, which is full of great guides and tips. But sometimes it was really stressful - 10 different guides from different authors on different versions of specific software.
+KINX Loadbalancer Agent Architecture
+-------------------------------------
 
-There is also missing bridge between guides for beginners (or **normal** users) and for professionals. Unfortunately for me I'm somewhere middle of this two groups.
+.. image:: images/klb_agent.png
 
-Second motivation for me was also the fact that I've terrible memory and started to forget all useful things. So this also serves as kind of a notebook for me.
+Work Flow
+---------
 
-Images
-______
+* Create **Loadbalancer**
 
-.. image:: images/github.png
+   * API: ``/api/haproxy/loadbalancers``
 
-What are these guides about
-----------------------------
-
-So I decided to write guides for this **middle** class. In these guides I'm going to cover several topics as it's coming to my mind.
-
-Main areas of these guides are:
-
-* Linux (mainly Arch Linux)
-* systemd (I'm happy user :) )
-* Raspberry Pi
-* Configuration of server
-* Domains, IP addresses, redirecting
-
-Disclaimer
-----------
-
-Keep in mind that I'm not profesional. 
-
-Everything you find here is without absolutly no waranty and I'm not responsible for any inconveniences or issues that might occurs. 
-
-Solutions I propose also don't have to be the best or might be far from perfect! On several parts of these guides exists different configurations, tools, packages... This is just one of them which I chose. Feel free to find more about them and find which fits you best!
-
-Some remarks
+Installation
 ------------
 
-When I feel that some topic is covered solidly somewhere else, I will
-redirect you there. So think about this also as summary of available materials.
+.. note::  You should use Ubuntu 16.04 image
+   Because of auto network interface setting
 
-Somewhere is necessary to know some basics about Linux and terminal. I'll try to remark them.
- 
-Sometimes I might be improper in explaining some terms or details. This might be mainly because of two reasons:
+#. Install Package::
 
-1. I don't understand enough to explain it better  
-2. It's not necessary you to know it for our purpose
+    $ apt-get update -y
+    $ apt-get install python-minimal -y
+    $ apt-get install python2.7-dev git -y
+    $ add-apt-repository ppa:vbernat/haproxy-1.6 #version 1.6.11
+    $ apt-get update -y
+    $ apt-get install haproxy -y
+    $ apt-get install python-setuptools build-essential libssl-dev -y
+    $ easy_install pip
+    $ pip install flask==1.0.2
+    $ pip install Flask-HTTPAuth==3.2.4
+    $ pip install psutil==5.0.1
+    $ pip install parse==1.8.4
+    $ pip install python-crontab==2.3.4
+    $ pip install gunicorn==19.9.0
+    $ pip install webob==1.8.2
+    $ pip install netaddr==0.7.19
+    $ apt-get install supervisor -y
+    $ apt-get install quagga
+    $ apt install socat
 
-I hope I'll be able to explain all things somehow *human-likely*. If you want to know technical details, just find them on your own :) .
+#. Make ``/opt/kinx_loadbalancer_agent`` directory for File Storage(Member, Peer)::
 
-On GitHub repository of this `guide <https://GitHub.com/Farence/tutos>`_ you can find some of my configs from both of my machines - laptop which I use as a work station and for fun and RPi which is server for several of my websites, FTP, SSH...
+    $ mkdir /opt/kinx_loadbalancer_agent
 
-One extremely important remark - **USE GOOGLE**!
+#. Make ``/etc/haproxy/conf.d`` directory for piece of haproxy file::
 
-My English
------------
+    $ mkdir /etc/haproxy/conf.d
 
-My English isn't great, but I believe it's good enough to understand what I'm trying to explain.
+#. Download kinx loadbalancer github & copy whole file to local dist-packages::
 
-Feedback
---------
+    $ git clone https://github.com/kinxnet/kinx-loadbalancer.git
+    $ cp kinx-loadbalancer/bin/kinx_loadbalancer_agent /usr/local/bin/
+    $ sudo chmod +x /usr/local/bin/kinx_loadbalancer_agent
+    $ cp -rf kinx-loadbalancer/kinx_loadbalancer_agent /usr/local/lib/python2.7/dist-packages/
 
-I'll be really happy for you feedback - don't hesitate to ask about some additional info or next guides and also if you find some mistakes, please let me know.
+#. Supervisor Setting (Retrieve from sample file in ``samples/kinx_haproxy_agent.conf``)::
 
-Both can be done by submitting an issue on git hub, where are these guides placed.
+    $ cp kinx-loadbalancer/etc/kinx_loadbalancer_agent.conf /etc/supervisor/conf.d/
+    $ vim kinx_haproxy_agent.conf
+
+    [program:kinx_loadbalancer_agent]  ;
+    command=/usr/local/bin/kinx_loadbalancer_agent ;
+    autostart=true ;
+    autorestart=true ;
+    user=root ;
+    redirect_stderr=true  ;
+    stdout_logfile=/var/log/supervisor/haproxy_agent.log  ;
+
+#. Supervisor reload::
+
+    $ supervisorctl reload
+
+#. Supervisor status check::
+
+    $ supervisorctl status
+
+#. Change logrotate settings::
+
+    # /etc/logrotate.d/haproxy (ex: rotate 52 -> rotate 7)
+    /var/log/haproxy.log {
+        daily
+        rotate 7
+        missingok
+        notifempty
+        compress
+        delaycompress
+        postrotate
+            invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
+        endscript
+    }
+
+#. Quagga configuration::
+
+    $ vim /etc/quagga/debian.conf
+    vtysh_enable=yes
+    zebra_options="  --daemon -A 0.0.0.0"
+    bgpd_options="   --daemon -A 0.0.0.0"
+
+    $ vim /etc/quagga/daemons
+    zebra=yes
+    bgpd=yes
+
+    $ service quagga restart
+
+#. Create Glace Image from VM::
+
+    $ nova --debug image-create --show {vm-uuid} {image-name} # raw file
+    $ glance image-download --file {file-name] --progress {image-id}
+    $ qemu-img convert -f raw -O qcow2 {raw-image} {qcow2-image}
+    $ glance image-create --disk-format qcow2 --container-format bare --visibility public --progress --name {image-name} --file {qcow2-image}

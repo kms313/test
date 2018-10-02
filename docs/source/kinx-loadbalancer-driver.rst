@@ -27,7 +27,7 @@ Work Flow
   #. Request configuration of loadbalancer to created VMs (haproxy.cfg)
   #. Request configuration of peer between created VMs (haproxy.cfg)
   #. Request configuration of quagga for ECMP loadbalancing
-  #. Request configuration of crontab that periodically send VMs Health Information
+  #. Request configuration of crontab that periodically send VMs Health Information via vLB MGMT Network
 
 * Create **Listener**
 

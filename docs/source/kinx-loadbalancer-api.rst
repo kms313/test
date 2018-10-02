@@ -1,11 +1,7 @@
-############
-All about me
-############
+KINX-loadbalancer-api
+========================
 
-I'm Daniele Procida, a Django user and developer.
+What is KINX loadbalancer api?
+---------------------------------
 
-I've contributed to:
 
-*   django CMS
-*   Arkestra
-*   Django
