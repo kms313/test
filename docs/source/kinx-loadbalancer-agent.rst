@@ -15,6 +15,7 @@ KINX Loadbalancer Agent Architecture
 REST API Example
 ----------------
 
+* API: ``/api/haproxy/loadbalancers``
    **Example request**:
 
    .. code-block:: javascript
