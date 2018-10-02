@@ -15,7 +15,7 @@ KINX Loadbalancer Agent Architecture
 REST API Example
 ----------------
 
-* API: ``/api/haproxy/loadbalancers``
+* Loadbalancer API: ``/api/haproxy/loadbalancers``
    **Example request**:
 
    .. code-block:: javascript
@@ -27,6 +27,25 @@ REST API Example
           "enabled": "lb_admin_state_up",
           "project_id": "lb.tenant_id"
       }
+
+   **Example HAProxy config result**::
+
+   global
+       daemon
+       user nobody
+       group nogroup
+       log /dev/log local0 err
+       log /dev/log local1 err
+       stats socket /run/haproxy/admin.sock mode 660 level admin
+
+   defaults
+       log global
+       retries 3
+       option redispatch
+       timeout connect 5000
+       timeout client 50000
+       timeout server 50000
+
 
 Installation
 ------------
