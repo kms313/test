@@ -28,23 +28,24 @@ REST API Example
           "project_id": "lb.tenant_id"
       }
 
-   **Example HAProxy config result**::
+   **Example HAProxy config result**:
+   ::
 
-   global
-       daemon
-       user nobody
-       group nogroup
-       log /dev/log local0 err
-       log /dev/log local1 err
-       stats socket /run/haproxy/admin.sock mode 660 level admin
+    global
+        daemon
+        user nobody
+        group nogroup
+        log /dev/log local0 err
+        log /dev/log local1 err
+        stats socket /run/haproxy/admin.sock mode 660 level admin
 
-   defaults
-       log global
-       retries 3
-       option redispatch
-       timeout connect 5000
-       timeout client 50000
-       timeout server 50000
+    defaults
+        log global
+        retries 3
+        option redispatch
+        timeout connect 5000
+        timeout client 50000
+        timeout server 50000
 
 
 Installation
