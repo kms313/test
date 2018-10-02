@@ -15,7 +15,7 @@ KINX Loadbalancer Agent Architecture
 REST API Example
 ----------------
 
-* Loadbalancer API: ``/api/haproxy/loadbalancers``
+* Loadbalancer POST API: ``/api/haproxy/loadbalancers``
    **Example request**:
 
    .. code-block:: javascript
@@ -47,6 +47,129 @@ REST API Example
         timeout client 50000
         timeout server 50000
 
+* Listener POST API: ``/api/haproxy/listeners``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "name": "listener.name",
+          "description": "listener.description",
+          "enabled": "listener.admin_state_up",
+          "protocol": "listener.protocol",
+          "protocol_port": "listener.protocol_port",
+          "protocol_mode": "listener.protocol",
+          "connection_limit": "listener.connection_limit",
+          "tls_certificate_id": "listener.default_tls_container_id",
+          "default_pool_id": "listener.default_pool_id",
+          "sni_containers": "sni_container_ids",
+          "vip_address": "listener.loadbalancer.vip_address",
+          "id": "listener.id"
+      }
+
+   **Example HAProxy config result**:
+   ::
+
+    ...
+    frontend 5d4e74e8-ccaa-4e2c-a2d0-bc82f60a3c61
+    option tcplog
+    maxconn 12000
+    bind 1.201.0.47:80
+    mode http
+    default_backend backend-5d4e74e8-ccaa-4e2c-a2d0-bc82f60a3c61 -> (Pool name)
+
+* Pool POST API: ``/api/haproxy/pools``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "name": "pool.name",
+          "description": "pool.description",
+          "enabled": "pool.admin_state_up",
+          "protocol": "pool.protocol",
+          "protocol_mode": "pool.protocol",
+          "stick_size": "STICKY_SIZE",
+          "stick_expire": "STICKY_EXPIRE",
+          "lb_algorithm": "pool.lb_algorithm",
+          "listener_id": "pool.listeners.id",
+          "loadbalancer_id": "pool.loadbalancer.id",
+          "id": "pool.id"
+      }
+
+   **Example HAProxy config result**:
+   ::
+
+    ...
+    backend backend-5d4e74e8-ccaa-4e2c-a2d0-bc82f60a3c61
+    mode http
+    balance roundrobin
+    stick-table type ip size 200k expire 1d peers kinx_loadbalancer_peers
+    stick on src
+    option forwardfor
+
+* Member POST API: ``/api/haproxy/pools/<listener_id>/members``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "id": "member.id",
+          "enabled": "member.admin_state_up",
+          "address": "member.address",
+          "protocol_port": "member.protocol_port",
+          "weight": "member.weight",
+          "type": "member.pool.session_persistence.type",
+          "cookie_name": "member.pool.session_persistence.cookie_name",
+          "healthmonitor": {
+              "type": "hm.type",
+              ....
+          }
+      }
+
+   **Example HAProxy config result**:
+   ::
+
+    backend backend-5d4e74e8-ccaa-4e2c-a2d0-bc82f60a3c61
+    ...
+    option forwardfor
+    server a0c8e3ff-5791-42dd-ac9f-f3bd0450c654 192.168.55.36:80 weight 1
+
+* HealthMonitor POST API: ``/api/haproxy/healthmonitors``
+   **Example request**:
+
+   .. code-block:: javascript
+
+      {
+          "name": "pool.name",
+          "description": "pool.description",
+          "enabled": "pool.admin_state_up",
+          "protocol": "pool.protocol",
+          "protocol_mode": "pool.protocol",
+          "stick_size": "STICKY_SIZE",
+          "stick_expire": "STICKY_EXPIRE",
+          "lb_algorithm": "pool.lb_algorithm",
+          "listener_id": "pool.listeners.id",
+          "loadbalancer_id": "pool.loadbalancer.id",
+          "healthmonitor": {
+              "type": "hm.type",
+              ....
+          }
+      }
+
+   **Example HAProxy config result**:
+   ::
+
+    backend backend-5d4e74e8-ccaa-4e2c-a2d0-bc82f60a3c61
+        mode http
+        balance roundrobin
+        stick-table type ip size 200k expire 1d peers kinx_loadbalancer_peers
+        stick on src
+        ``timeout check 10``
+        ``option httpchk GET /``
+        ``http-check expect rstatus 200``
+        option forwardfor
+        server a0c8e3ff-5791-42dd-ac9f-f3bd0450c654 192.168.55.36:80 weight 1 ``check inter 3s fall 2 rise 2``
 
 Installation
 ------------
