@@ -165,11 +165,11 @@ REST API Example
         balance roundrobin
         stick-table type ip size 200k expire 1d peers kinx_loadbalancer_peers
         stick on src
-        ``timeout check 10``
-        ``option httpchk GET /``
-        ``http-check expect rstatus 200``
+        **timeout check 10**
+        **option httpchk GET /**
+        **http-check expect rstatus 200**
         option forwardfor
-        server a0c8e3ff-5791-42dd-ac9f-f3bd0450c654 192.168.55.36:80 weight 1 ``check inter 3s fall 2 rise 2``
+        server a0c8e3ff-5791-42dd-ac9f-f3bd0450c654 192.168.55.36:80 weight 1 **check inter 3s fall 2 rise 2**
 
 Installation
 ------------
